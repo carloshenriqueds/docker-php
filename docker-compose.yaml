@@ -1,0 +1,31 @@
+version: '2'
+services:
+  php:
+    build: ./php
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - .:/var/www/html
+    links:
+      - mysql
+    environment:
+      - PROJECT_FOLDER=projeto
+
+      
+  mysql:
+    image: mysql:5.6.26
+    container_name: mysql_chs
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=db_carlos
+    ports:
+      - "3306:3306"
+
+#  dump:
+#    build: ./../dumper
+#    volumes:  
+#      - ./../dumper/ARQUIVO_DUMP:/var/db/
+#    command: sh -c "sleep 20 && /usr/bin/mysql -h mysql -uroot -proot DBNAME < /var/db/ARQUIVO_DUMP"
+#    depends_on:
+#      - mysql
